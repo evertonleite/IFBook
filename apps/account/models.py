@@ -1,23 +1,22 @@
 from django.db import models
-# class User(AbstractBaseUser, PermissionsMixin):
-#     username = models.CharField(max_length=200, unique=True)
-#     email = models.EmailField(unique=True)
-#     password = models.CharField(max_length=200)
-#     is_staff = models.BooleanField(null=True)
-#     is_superuser = models.BooleanField(null=True)
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 
-#     objects = UserManager()
 
-#     USERNAME_FIELD = "username"
 
-# Create your models here.
-class User(models.Model):
-    name = models.CharField(max_length=255)
-    username = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
-    password = models.CharField(max_length=255)
-    balance = models.CharField(max_length=255)
-    adress = models.ForeignKey("Adress", on_delete=models.CASCADE)
+class User(AbstractBaseUser, PermissionsMixin):
+    name = models.CharField("Nome", max_length=255)
+    username = models.CharField(max_length=25, unique=True)
+    email = models.EmailField("E-mail", max_length=255)
+    balance = models.CharField("Saldo", max_length=255)
+    phone = models.CharField("Telefone", max_length=50)
+    
+    is_staff = models.BooleanField("Administrador", default=False)
+    is_active = models.BooleanField("Ativo", default=True)
+    date_joined = models.DateTimeField("Data de Entrada", auto_now_add=True)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = "username"
     
     def __str__(self):
         return self.name
@@ -30,6 +29,7 @@ class Adress(models.Model):
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     complement = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.city

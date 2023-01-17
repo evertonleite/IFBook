@@ -34,6 +34,7 @@ class Category(models.Model):
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     qtd_books = models.IntegerField(default=0)
+    books = models.ManyToManyField(Book)
     
     
     

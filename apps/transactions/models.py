@@ -1,5 +1,6 @@
 from django.db import models
 from apps.books.models import Book
+from apps.account.models import User
 
 # Create your models here.
 class Transaction(models.Model):
@@ -9,7 +10,7 @@ class Transaction(models.Model):
     )
     timetable = models.DateField()
     type = models.CharField(max_length=1, choices=STATUS_CHOICES, blank=False, null=False)
-    user = models.ForeignKey("User", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     books = models.ManyToManyField(Book)
     
     def __str__(self):
