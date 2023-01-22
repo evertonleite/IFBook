@@ -8,11 +8,15 @@ class Transaction(models.Model):
         ("1", "Compra"),
         ("2", "Venda"),
     )
-    timetable = models.DateField()
-    type = models.CharField(max_length=1, choices=STATUS_CHOICES, blank=False, null=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    books = models.ManyToManyField(Book)
-    
+    timetable = models.DateTimeField(verbose_name="Horário", auto_now_add=True)
+    type = models.CharField(
+        verbose_name="Tipo",
+        max_length=1,
+        choices=STATUS_CHOICES,
+        blank=False,
+        null=False,
+    )
+    user = models.ForeignKey(User, verbose_name="Vendedor", on_delete=models.CASCADE)
+
     def __str__(self):
         return self.type
-    
